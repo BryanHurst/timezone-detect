@@ -1,6 +1,24 @@
 {% if show %}
 <script type="text/javascript">
 
+  var createXMLHttp = function() {
+        var xmlHttp = null;
+        // Use XMLHttpRequest where available
+        if (typeof(XMLHttpRequest) !== undefined) {
+            xmlHttp = new XMLHttpRequest();
+            return xmlHttp;
+        // IE
+        } else if (window.ActiveXObject) {
+            var ieXMLHttpVersions = ['MSXML2.XMLHttp.5.0', 'MSXML2.XMLHttp.4.0', 'MSXML2.XMLHttp.3.0', 'MSXML2.XMLHttp', 'Microsoft.XMLHttp'];
+            for (var i = 0; i < ieXMLHttpVersions.length; i++) {
+                    try {
+                        xmlHttp = new ActiveXObject(ieXMLHttpVersions[i]);
+                        return xmlHttp;
+                    } catch (e) {}
+            }
+        }
+  };
+
   var csrf_token = '{{ csrf_token }}';
   var timezone_set_endpoint = '{% url "timezone_detect__set" %}';
   (function() {
@@ -9,6 +27,20 @@
     timezone_script.setAttribute('async', 'true');
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(timezone_script, s);
+
+    var timezone = timezone_script.determine();
+
+    if (typeof(timezone) === 'undefined'){
+        timezone = 'None'
+    }
+    var xmlHttp = createXMLHttp();
+    if(xmlHttp){
+        xmlHttp.open('post', timezone_set_endpoint, true);
+        xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xmlHttp.setRequestHeader('X-CSRFToken', csrf_token);
+        xmlHttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xmlHttp.send("timezone=" + timezone)
+    }
   })();
 
 </script>
