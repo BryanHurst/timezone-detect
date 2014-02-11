@@ -1,23 +1,27 @@
 from django.http import HttpResponse
 from django.views.generic import View
+from pytz import timezone as tz
+from django.conf import settings
 
 
-class SetOffsetView(View):
+class SetTimezoneView(View):
     http_method_names = ['post']
 
     @staticmethod
     def post(request, *args, **kwargs):
-        offset = request.POST.get('offset', None)
-        if not offset:
-            return HttpResponse("No 'offset' parameter provided", status=400)
+        timezone = request.POST.get('timezone', None)
+        if not timezone:
+            return HttpResponse("No 'timezone' parameter provided", status=400)
 
         try:
-            offset = int(offset)
-        except ValueError:
-            return HttpResponse("Invalid 'offset' value provided", status=400)
+            if "None" in str(timezone).lower():
+                timezone = tz(settings.TIME_ZONE)
+            else:
+                timezone = tz(str(timezone))
+        except:
+            return HttpResponse("Invalid 'timezone' value provided", status=400)
 
-        tz = offset_to_timezone(int(offset))
         print tz
-        request.session['detected_tz'] = tz
+        request.session['detected_timezone'] = tz
 
         return HttpResponse("OK")
