@@ -1,4 +1,5 @@
 from django.utils import timezone
+from pytz import timezone as get_timezone
 
 
 class TimezoneMiddleware(object):
@@ -8,6 +9,7 @@ class TimezoneMiddleware(object):
             # `request.timezone_active` is used in the template
             # tag to detect if the timezone has been activated
             request.timezone_active = True
-            timezone.activate(tz)
+            timezone.activate(get_timezone(tz))
         else:
+            request.timezone_active = False
             timezone.deactivate()
