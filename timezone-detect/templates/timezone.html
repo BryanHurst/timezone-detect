@@ -1,5 +1,6 @@
-{%  extends "detector.html" %}
+{% load timezone_detect %}
+{% timezone_detect %}
 
 {% block content %}
-    Test
+    Your Timezone is: {{ request.session.detected_timezone }}
 {% endblock %}
