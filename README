@@ -1,0 +1,31 @@
+Django timezone-detect will grab the current timezone of the user viewing the site and store it in the session.
+
+Authors:
+Bryan Hurst (Newline Technical Innovations)
+jsTimezoneDetect script posted by pellepim (https://bitbucket.org/pellepim/jstimezonedetect)
+
+How to Install:
+-Copy "timezone-detect" application into your Django site, or put in your python "site-packages".
+-Add "timezone-detect" to your INSTALLED_APPS:
+    INSTALLED_APPS = (
+        'timezone-detect',
+    )
+-Update your urls.py file:
+    urlpatterns = patterns('',
+        url(r'^timezone-detect/', include('timezone-detect.urls')),
+    )
+-Add the timezone_detect template tag to your site, probably in a base.html file:
+    {% load timezone_detect %}
+    {% timezone_detect %}
+-Add TimezoneMiddleware to MIDDLEWARE_CLASSES:
+    MIDDLEWARE_CLASSES = (
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'timezone-detect.middleware.TimezoneMiddleware',
+    )
+
+In the Future:
+-Use jQuery to post back to the set timezone view instead of XMLHttpRequest
+-Get timezone to be set on first page view
+-Will store timezone against user
+-Allow users to modify and lock their timezone settings
