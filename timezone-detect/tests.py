@@ -17,13 +17,13 @@ class ViewTestCase(TestCase):
 
     def test_xhr_valid(self):
         from .views import SetTimezoneView
-        request = self.factory.post('/abc', {'offset': '-60'})
+        request = self.factory.post('/abc', {'timezone': 'America/Denver'})
         self.add_session(request)
         
         response = SetTimezoneView.as_view()(request)
         self.assertEqual(response.status_code, 200)
-        self.assertIn('detected_tz', request.session)
-        self.assertIsInstance(request.session['detected_tz'], BaseTzInfo)
+        self.assertIn('detected_timezone', request.session)
+        self.assertIsInstance(request.session['detected_timezone'], BaseTzInfo)
 
     def test_xhr_bad_method(self):
         from .views import SetTimezoneView
@@ -33,7 +33,7 @@ class ViewTestCase(TestCase):
         response = SetTimezoneView.as_view()(request)
         self.assertEqual(response.status_code, 405)
 
-    def test_xhr_no_offset(self):
+    def test_xhr_no_timezone(self):
         from .views import SetTimezoneView
         request = self.factory.post('/abc')
         self.add_session(request)
@@ -41,9 +41,9 @@ class ViewTestCase(TestCase):
         response = SetTimezoneView.as_view()(request)
         self.assertEqual(response.status_code, 400)
 
-    def test_xhr_bad_offset(self):
+    def test_xhr_bad_timezone(self):
         from .views import SetTimezoneView
-        request = self.factory.post('/abc', {'offset': '12foo34'})
+        request = self.factory.post('/abc', {'timezone': '12foo34'})
         self.add_session(request)
 
         response = SetTimezoneView.as_view()(request)
