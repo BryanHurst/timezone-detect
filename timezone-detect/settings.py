@@ -1,5 +1,5 @@
 # FOR USE WITH TESTING ONLY
-# See defaults.py for default settings
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -57,7 +57,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.join(os.path.join(os.path.dirname(__file__), os.pardir), "static")
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -90,6 +90,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'timezone-detect.middleware.TimezoneMiddleware',
 )
 
 ROOT_URLCONF = 'timezone-detect.urls'
@@ -101,6 +102,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(os.path.join(os.path.dirname(__file__), os.pardir), "templates/"),
 )
 
 INSTALLED_APPS = (
