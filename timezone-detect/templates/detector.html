@@ -1,4 +1,5 @@
 {% if show %}
+<script type="text/javascript" src='{{  STATIC_URL }}js/jsTimezoneDetect{% if not DEBUG %}.min{% endif %}.js'></script>
 <script type="text/javascript">
 
   var createXMLHttp = function() {
@@ -22,13 +23,8 @@
   var csrf_token = '{{ csrf_token }}';
   var timezone_set_endpoint = '{% url "timezone_detect__set" %}';
   (function() {
-    var timezone_script = document.createElement('script');
-    timezone_script.src = '{{ STATIC_URL }}js/jsTimezoneDetect{% if not DEBUG %}.min{% endif %}.js';
-    timezone_script.setAttribute('async', 'true');
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(timezone_script, s);
-
-    var timezone = timezone_script.determine();
+    var timezone = jstz.determine();
+    timezone = timezone.name();
 
     if (typeof(timezone) === 'undefined'){
         timezone = 'None'
