@@ -23,7 +23,7 @@
   var timezone_set_endpoint = '{% url "timezone_detect__set" %}';
   (function() {
     var timezone_script = document.createElement('script');
-    timezone_script.src = '{{ STATIC_URL }}timezone-detect/js/jsTimezoneDetect{% if not DEBUG %}.min{% endif %}.js';
+    timezone_script.src = '{{ STATIC_URL }}js/jsTimezoneDetect{% if not DEBUG %}.min{% endif %}.js';
     timezone_script.setAttribute('async', 'true');
     var s = document.getElementsByTagName('script')[0];
     s.parentNode.insertBefore(timezone_script, s);
