@@ -1,8 +1,6 @@
 from django.http import HttpResponse
 from django.views.generic import View
 
-from utilities import offset_to_timezone
-
 
 class SetOffsetView(View):
     http_method_names = ['post']
