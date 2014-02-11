@@ -10,8 +10,6 @@
  * http://pellepim.bitbucket.org/jstz/
  *
  * Copyright (c) Jon Nylander
- *
- * Modified by Bryan Hurst of Newline Technical Innovations to work with Django
  */
 
 /*jslint undef: true */
