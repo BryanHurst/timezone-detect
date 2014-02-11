@@ -21,7 +21,7 @@ class SetTimezoneView(View):
         except:
             return HttpResponse("Invalid 'timezone' value provided", status=400)
 
-        print tz
-        request.session['detected_timezone'] = tz
+        print timezone
+        request.session['detected_timezone'] = timezone
 
         return HttpResponse("OK")
