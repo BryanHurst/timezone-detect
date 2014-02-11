@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.views.generic import View
 from pytz import timezone as tz
+from pytz import UnknownTimeZoneError
 from django.conf import settings
 
 
@@ -18,8 +19,10 @@ class SetTimezoneView(View):
                 timezone = tz(settings.TIME_ZONE)
             else:
                 timezone = tz(str(timezone))
-        except:
+        except UnknownTimeZoneError:
             return HttpResponse("Invalid 'timezone' value provided", status=400)
+        except:
+            return HttpResponse("An unknown error occurred while trying to parse the timezone", status=500)
 
         print timezone
         request.session['detected_timezone'] = timezone
