@@ -2,21 +2,27 @@ Django timezone-detect will grab the current timezone of the user viewing the si
 
 Authors:
 Bryan Hurst (Newline Technical Innovations)
+
+Includes:
 jsTimezoneDetect script posted by pellepim (https://bitbucket.org/pellepim/jstimezonedetect)
 
 How to Install:
 -Copy "timezone-detect" application into your Django site, or put in your python "site-packages".
+
 -Add "timezone-detect" to your INSTALLED_APPS:
     INSTALLED_APPS = (
         'timezone-detect',
     )
+
 -Update your urls.py file:
     urlpatterns = patterns('',
         url(r'^timezone-detect/', include('timezone-detect.urls')),
     )
+
 -Add the timezone_detect template tag to your site, probably in a base.html file:
     {% load timezone_detect %}
     {% timezone_detect %}
+
 -Add TimezoneMiddleware to MIDDLEWARE_CLASSES:
     MIDDLEWARE_CLASSES = (
         'django.contrib.sessions.middleware.SessionMiddleware',
