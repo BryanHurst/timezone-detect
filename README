@@ -38,6 +38,6 @@ In the Future:
 -Create setup/easy-install script
 
 Update:
-We added Redmine issue tracking.
-GitHub Hook Plugins is now installed in Redmine.
+-We added Redmine issue tracking
+-GitHub Hook Plugins is now installed in Redmine
 
